@@ -51,7 +51,3 @@ def dump_history(history, filename=None):
 
     with open(filename, "w") as f:
         json.dump(history.__dict__, f)
-
-
-def main():
-    pass
