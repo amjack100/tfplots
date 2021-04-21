@@ -65,12 +65,12 @@ def _plot_history_altair(history, filename=None):
 
 def dump_history(history, filename=None):
 
-    date = datetime.datetime.now().strftime("%d-%m-%y-%H:%M:%S")
+    date_ = datetime.datetime.now().strftime(date(FILE_DATE))
 
     history.model = None
 
     if filename is None:
-        filename = date + ".json"
+        filename = date_ + ".json"
 
     with open(filename, "w") as f:
         json.dump(history.__dict__, f)
