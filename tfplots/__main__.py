@@ -4,6 +4,7 @@ import json
 import pandas as pd
 import altair as alt
 from altair_saver import save
+from altair_saver import available_formats
 
 TITLE_DATE = "%d-%m-%y %H:%M:%S"
 FILE_DATE = "%d-%m-%y_%H:%M:%S"
@@ -44,8 +45,11 @@ def _plot_history_matplotlib(history, filename=None):
 
 def _plot_history_altair(history, filename=None):
 
+    # Saving as png requires that chromedriver + selenium are available
+    ext, mode = ('png', 'wb') if 'png' in available_formats() else ('html', 'w')
+
     if filename is None:
-        filename = date(FILE_DATE) + ".png"
+        filename = date(FILE_DATE) + "." + ext
 
     data = history.history
     data["epoch"] = history.epoch
@@ -58,8 +62,10 @@ def _plot_history_altair(history, filename=None):
         .configure_legend(
             title=None
         )
+
     )
-    with open(filename, "wb") as f:
+
+    with open(filename, mode) as f:
         save(chart, f)
 
 
